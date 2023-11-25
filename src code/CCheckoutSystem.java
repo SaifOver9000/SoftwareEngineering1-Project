@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-// saif is a fucker
 /**
  * Represents a checkout system for processing product purchases.
  */
@@ -30,7 +29,17 @@ public class CCheckoutSystem {
         this.products = products;
         this.loyaltyCard = new CLoyaltyCard();
     }
-
+    public void generateReceipt(List<CProduct> purchasedProducts, double subtotal, double tax, double total) {
+        System.out.println("------ RECEIPT ------");
+        System.out.println("Welcome to Wolfville Store");
+        for (CProduct product : purchasedProducts) {
+            System.out.println(product.getName() + ": $" + product.getPrice());
+        }
+        System.out.printf("Subtotal: $%.2f\n", subtotal);
+        System.out.printf("Tax: $%.2f\n", tax);
+        System.out.printf("Total: $%.2f\n", total);
+        System.out.println("Thank you for shopping with us!");
+    }
     /**
      * Initiates the checkout process, allowing the user to select products and complete the purchase.
      */
@@ -72,6 +81,7 @@ public class CCheckoutSystem {
         System.out.println();
         boolean hasLoyaltyCard = handleLoyaltyCard(scanner, total);
         processPayment(scanner, new CPaymentMethod(), hasLoyaltyCard);
+        generateReceipt(purchasedProducts,subtotal, tax, total);
     }
 
     /**
@@ -98,7 +108,7 @@ public class CCheckoutSystem {
     private boolean handleLoyaltyCard(Scanner scanner, double total) {
         System.out.print("Do you have a loyalty card? (yes/no): ");
         String hasLoyaltyCard = scanner.next();
-
+        scanner.nextLine();
         if (hasLoyaltyCard.equalsIgnoreCase("yes")) {
             System.out.print("Enter your loyalty card number: ");
             String cardNumber = scanner.next();
