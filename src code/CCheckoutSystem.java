@@ -138,7 +138,7 @@ public class CCheckoutSystem {
     private void processPayment(Scanner scanner, CPaymentMethod paymentMethod, boolean hasLoyaltyCard) {
         while (true) {
             System.out.print("Enter your payment method (Debit, Credit, Cash, Loyalty Card): ");
-            String chosenPaymentMethod = scanner.nextLine();
+            String chosenPaymentMethod = scanner.next();
 
             if (chosenPaymentMethod.equalsIgnoreCase("Loyalty Card") && !hasLoyaltyCard) {
                 System.out.println("Loyalty card not present. You cannot use it as a payment method.");
@@ -150,8 +150,8 @@ public class CCheckoutSystem {
                     System.out.println("Transaction completed.");
                     break;
                 } else {
-                    System.out.println("Transaction failed. Please enter a valid payment method");
-                }
+                     System.out.println("Transaction failed. Please enter a valid payment method");
+                 }
             }
         }
     }

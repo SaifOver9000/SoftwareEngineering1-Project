@@ -3,12 +3,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
-
+import java.text.DecimalFormat;
 
 public class Main 
 {
     public static void main(String[] args) 
     {
+        DecimalFormat currencyFormat = new DecimalFormat("$#.00");
+        
         Scanner input = new Scanner(System.in);
         int choice;
 
@@ -53,6 +55,7 @@ public class Main
 
     public static void processReturns(Map<Integer, CProduct> products) 
     {   
+        DecimalFormat currencyFormat = new DecimalFormat("$#.00");
         double totalReturnedAmount = 0.0;
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter the Serial number of the item you want to return (-1 to finish): ");
@@ -68,7 +71,7 @@ public class Main
             {
                 CReturns returnHandler = new CReturns(0, 0);
                 double returnedAmount = returnHandler.makeReturn(serialNumber, products);
-                System.out.println("amount returned: $" + returnedAmount);
+                System.out.println("amount returned: " + currencyFormat.format(returnedAmount));
                 totalReturnedAmount += returnedAmount;
             } 
             else 
@@ -77,7 +80,7 @@ public class Main
             }
         }
 
-        System.out.println("Total amount returned: $" + totalReturnedAmount);
+        System.out.println("Total amount returned: " + totalReturnedAmount);
         input.close();
     }
 
