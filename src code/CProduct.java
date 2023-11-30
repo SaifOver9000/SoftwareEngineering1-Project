@@ -1,88 +1,64 @@
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a product with a serial number, name, price, and quantity.
-*/
-
+ * Class representing a product in the Wolfville store.
+ */
 public class CProduct 
 {
-    // Product attributes
-    private int _serialNumber;
-    private String _name;
-    private double _price;
-    private int _quantity;
+    private int serialNumber;
+    private String name;
+    private double price;
 
-    /**
-     * Constructs a product with the given serial number, name, and price.
+        /**
+     * Constructor to initialize a product with serial number, name, and price.
      *
-     * @param _serialNumber The serial number of the product
-     * @param _name         The name of the product
-     * @param _price        The price of the product
+     * @param serialNumber Serial number of the product
+     * @param name         Name of the product
+     * @param price        Price of the product
      */
 
-    public CProduct(int _serialNumber, String _name, double _price) 
-    {
-        this._serialNumber = _serialNumber;
-        this._name = _name;
-        this._price = _price;
-        this._quantity = 1;
+    public CProduct(int serialNumber, String name, double price) {
+        this.serialNumber = serialNumber;
+        this.name = name;
+        this.price = price;
     }
 
     /**
-     * Gets the serial number of the product.
+     * Get the serial number of the product.
      *
-     * @return The serial number of the product
+     * @return Serial number of the product
      */
-    public int get_serialNumber() {
-        return _serialNumber;
+
+    public int getSerialNumber() {
+        return serialNumber;
     }
+
+
     /**
-     * Gets the name of the product.
+     * Get the name of the product.
      *
-     * @return The name of the product
+     * @return Name of the product
      */
+
     public String getName() {
-        return _name;
+        return name;
     }
+
     /**
-     * Gets the price of the product.
+     * Get the price of the product.
      *
-     * @return The price of the product
+     * @return Price of the product
      */
     public double getPrice() {
-        return _price;
+        return price;
     }
-    /**
-     * Gets the quantity of the product.
-     *
-     * @return The quantity of the product
-     */
-    public int getQuantity() {
-        return _quantity;
-    }
-    /**
-     * Sets the quantity of the product, ensuring it is at least 1.
-     *
-     * @param _quantity The quantity to set
-     */
-    public void setQuantity(int _quantity) 
-    {   
-        if (_quantity >= 1)
-        {
-            this._quantity = _quantity;
-        }
 
-        else
-        {
-            System.out.println("Quantity must be at least 1.");
-        }
-        
-    }
     /**
-     * Retrieves a map of all available products with their serial numbers as keys.
+     * Get all available products in the Wolfville store.
      *
-     * @return A map of all available products
+     * @return Map of serial numbers to CProduct objects representing available products
      */
     public static Map<Integer, CProduct> getAllCProducts() {
         Map<Integer, CProduct> CProducts = new HashMap<>();
@@ -136,7 +112,7 @@ public class CProduct
         CProducts.put(48, new CProduct(48, "Tissues", 1.29));
         CProducts.put(49, new CProduct(49, "Dental Floss", 1.99));
         CProducts.put(50, new CProduct(50, "Wiper Fluid", 3.99));
-        
+
         return CProducts;
     }
 }
