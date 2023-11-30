@@ -1,51 +1,21 @@
 /**
- * Represents a payment method handler with methods to process different payment types.
+ * Class representing a payment method in the Wolfville store.
  */
-public class CPaymentMethod 
-{
-    // Constants representing payment outcomes
-    public static final int PAYMENT_SUCCESS = 0;
-    public static final int INVALID_PAYMENT_METHOD = 1;
+public class CPaymentMethod {
 
     /**
-     * Processes the payment based on the provided payment method.
+     * Constant representing a successful payment.
+     */
+    public static final int PAYMENT_SUCCESS = 0;
+
+    /**
+     * Process a payment using the specified payment method.
      *
      * @param paymentMethod The payment method to be processed
-     * @return The payment outcome (success or failure)
+     * @return An integer representing the payment status (0 for success, others for failure)
      */
-    public int processPayment(String paymentMethod) 
-    {
-        if (paymentMethod.equalsIgnoreCase("debit")) 
-        {
-            System.out.println("Processing Debit card payment...");
-            return PAYMENT_SUCCESS;
-
-        } 
-        else if (paymentMethod.equalsIgnoreCase("credit")) 
-        {
-            System.out.println("Processing Credit card payment...");
-            return PAYMENT_SUCCESS;
-
-        } 
-
-        else if (paymentMethod.equalsIgnoreCase("cash")) 
-        {
-            System.out.println("Processing Cash payment...");
-            return PAYMENT_SUCCESS;
-
-        } 
-
-        else if (paymentMethod.equalsIgnoreCase("loyalty card")) 
-        {
-            System.out.println("Processing Loyalty Card payment...");
-            return PAYMENT_SUCCESS;
-
-        }
-         
-        else 
-        {
-            System.out.println("Invalid payment method. Please choose a valid option.");
-            return INVALID_PAYMENT_METHOD;
-        }
+    public int processPayment(String paymentMethod) {
+        System.out.println("Processing " + paymentMethod + " payment...");
+        return PAYMENT_SUCCESS;
     }
 }
