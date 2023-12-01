@@ -24,72 +24,90 @@ public class CCheckoutSystem {
     /**
      * Initiates the checkout process.
      */
-
-public void checkout() {
-    Scanner scanner = new Scanner(System.in);
-    List<CProduct> purchasedProducts = new ArrayList<>();
-    double subtotal = 0.0;
-
-    try {
+    public void checkout() {
+        Scanner scanner = new Scanner(System.in);
+    
         // Display available products to the user
         displayAvailableProducts();
-
-        // Prompt the user to select items for purchase
-        System.out.println("Select items to add to the cart (enter serial number, -1 to finish): ");
+    
         while (true) {
+            List<CProduct> purchasedProducts = new ArrayList<>();
+            double subtotal = 0.0;
+    
             try {
-                // Get the serial number of the selected item
-                int serialNumber = scanner.nextInt();
-                
-                // Check if the user wants to finish the selection
-                if (serialNumber == -1) {
-                    break;
+                // Prompt the user to select items for purchase
+                System.out.println("Select items to add to the cart (enter serial number, -1 to finish): ");
+    
+                // Flag to check if at least one item is added to the cart
+                boolean hasItemsInCart = false;
+    
+                while (true) {
+                    try {
+                        // Get the serial number of the selected item
+                        int serialNumber = scanner.nextInt();
+    
+                        // Check if the user wants to finish the selection
+                        if (serialNumber == -1) {
+                            break;
+                        }
+    
+                        // Retrieve the product using the serial number
+                        CProduct product = products.get(serialNumber);
+    
+                        // Check if the product exists
+                        if (product != null) {
+                            // Add the selected product to the cart
+                            purchasedProducts.add(product);
+                            // Update the subtotal
+                            subtotal += product.getPrice();
+                            System.out.println("Added: " + product.getName());
+                            hasItemsInCart = true; // Set the flag to true
+                        } else {
+                            System.out.println("Invalid serial number.");
+                        }
+                    } catch (InputMismatchException e) {
+                        // Handle invalid input (non-integer) and consume the invalid input
+                        System.out.println("Invalid input. Please enter a valid serial number.");
+                        scanner.next(); // Consume the invalid input
+                    }
                 }
-
-                // Retrieve the product using the serial number
-                CProduct product = products.get(serialNumber);
-                
-                // Check if the product exists
-                if (product != null) {
-                    // Add the selected product to the cart
-                    purchasedProducts.add(product);
-                    // Update the subtotal
-                    subtotal += product.getPrice();
-                    System.out.println("Added: " + product.getName());
-                } else {
-                    System.out.println("Invalid serial number.");
+    
+                // Check if at least one item is added to the cart
+                if (!hasItemsInCart) {
+                    System.out.println("Your cart is empty. Please add at least one item to the cart.");
+                    continue; // Continue to the next iteration of the loop
                 }
-            } catch (InputMismatchException e) {
-                // Handle invalid input (non-integer) and consume the invalid input
-                System.out.println("Invalid input. Please enter a valid serial number.");
-                scanner.next(); // Consume the invalid input
+    
+                // Calculate tax and total
+                double tax = subtotal * 0.15;
+                double total = subtotal + tax;
+    
+                // Display order details to the user
+                displayOrderDetails(subtotal, tax, total);
+    
+                // Check if the user has a loyalty card
+                boolean hasLoyaltyCard = handleLoyaltyCard(scanner);
+    
+                // Process payment for the purchase
+                processPayment(scanner, new CPaymentMethod(), hasLoyaltyCard);
+    
+                // Generate and display the receipt
+                generateReceipt(purchasedProducts, subtotal, tax, total);
+    
+                // Exit the loop after completing the checkout
+                break;
+    
+            } catch (Exception e) {
+                // Handle general exceptions and display an error message
+                System.out.println("An error occurred: " + e.getMessage());
             }
         }
-
-        // Calculate tax and total
-        double tax = subtotal * 0.15;
-        double total = subtotal + tax;
-
-        // Display order details to the user
-        displayOrderDetails(subtotal, tax, total);
-        
-        // Check if the user has a loyalty card
-        boolean hasLoyaltyCard = handleLoyaltyCard(scanner);
-
-        // Process payment for the purchase
-        processPayment(scanner, new CPaymentMethod(), hasLoyaltyCard);
-
-        // Generate and display the receipt
-        generateReceipt(purchasedProducts, subtotal, tax, total);
-
-    } catch (Exception e) {
-        // Handle general exceptions and display an error message
-        System.out.println("An error occurred: " + e.getMessage());
-    } finally {
-        // Close the scanner to prevent resource leaks
+    
+        // Close the scanner outside the loop to prevent resource leaks
         scanner.close();
     }
-}
+    
+
 
     private void displayAvailableProducts() {
         System.out.println("Available Products:");

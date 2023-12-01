@@ -7,42 +7,57 @@ import java.text.DecimalFormat;
  * Main class to run the Wolfville store application.
  */
 public class Main {
-    public static void main(String[] args) {
+   
+public static void main(String[] args) {
+    Scanner input = new Scanner(System.in);
+    System.out.println("Welcome to the Wolfville store");
+
+    int choice = -1;
+    boolean displayMenu = true;
+
+    while (choice < 1 || choice > 3) {
         try {
-            Scanner input = new Scanner(System.in);
-            System.out.println("Welcome to the Wolfville store");
-            System.out.println("Please select between our 3 options");
-            System.out.println("1 -- to buy and checkout");
-            System.out.println("2 -- to return");
-            System.out.println("3 -- to join our special program");
-            System.out.print("Enter your choice (1, 2, or 3): ");
-
-            int choice = input.nextInt();
-
-            Map<Integer, CProduct> products = CProduct.getAllCProducts();
-            CLoyaltyCardDetails loyaltyCardDetails = new CLoyaltyCardDetails();
-
-            switch (choice) {
-                case 1:
-                    CCheckoutSystem checkoutSystem = new CCheckoutSystem(products);
-                    checkoutSystem.checkout();
-                    break;
-                case 2:
-                    processReturns(input, products);
-                    break;
-                case 3:
-                    joinLoyaltyProgram(input, loyaltyCardDetails);
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
+            if (displayMenu) {
+                System.out.println("Please select between our 3 options");
+                System.out.println("1 -- to buy and checkout");
+                System.out.println("2 -- to return");
+                System.out.println("3 -- to join our special program");
             }
 
-        } catch (InputMismatchException exception) {
+            System.out.print("Enter your choice (1, 2, or 3): ");
+            choice = input.nextInt();
+
+            if (choice < 1 || choice > 3) {
+                System.out.println("Invalid choice. Please enter a valid choice (1, 2, or 3).");
+                displayMenu = false;
+            }
+        } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid choice (1, 2, or 3).");
-        } catch (Exception e) {
-            System.out.println("An error occurred: " + e.getMessage());
+            input.next(); // Consume the invalid input
+            displayMenu = false;
         }
     }
+
+    Map<Integer, CProduct> products = CProduct.getAllCProducts();
+    CLoyaltyCardDetails loyaltyCardDetails = new CLoyaltyCardDetails();
+
+    switch (choice) {
+        case 1:
+            CCheckoutSystem checkoutSystem = new CCheckoutSystem(products);
+            checkoutSystem.checkout();
+            break;
+        case 2:
+            processReturns(input, products);
+            break;
+        case 3:
+            joinLoyaltyProgram(input, loyaltyCardDetails);
+            break;
+    }
+
+    // Close the scanner to prevent resource leaks
+    input.close();
+}
+    
 
     /**
      * Process returns for purchased items.
