@@ -1,4 +1,6 @@
 # SoftwareEngineering1-Project : Checkout prototype
 
-The goal of this project was to create a system that could simulate a grocery store
+The goal of this project is  to create a system that  simulates a grocery store.
+
+It would simulate a checkout system, with  functionality of adding, totaling, etc.. :  simulating a store 
 
